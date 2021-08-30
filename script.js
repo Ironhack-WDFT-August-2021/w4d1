@@ -224,3 +224,79 @@ const str = "Hello World!"
 const reversedUppercase = [...str.toUpperCase()].reverse();
 console.log(reversedUppercase); // [ '!', 'D', 'L', 'R', 'O', 'W', ' ', 'O', 'L', 'L', 'E', 'H' ]
 console.log('hello');
+
+// arrow functions
+// const evens = numbers.filter(function (num) {
+// 	return num % 2 === 0
+// });
+// can be refactored to this:
+const evens = numbers.filter(num => num % 2 === 0);
+console.log(evens);
+
+const test = () => {
+	const msg = 'hello';
+	return msg
+}
+
+const greet = () => 'hello'
+
+class Person {
+	constructor() {
+		this.age = 0;
+	}
+
+	// using the arrow function 'this' get's the 
+	// correct context of Person
+	growUp() {
+		// const that = this;
+		setInterval(() => {
+
+			this.age++
+			console.log(this.age)
+		}, 1000)
+	}
+}
+
+const p = new Person();
+console.clear();
+
+// Promise - a JS object that represents the eventual completion
+// or failure of an asynchronous operation
+// A Promise can have 3 states: 1. resolved (success) 2. rejected (failure) 
+// 3. pending (undecided)
+function createRandomNumber(min, max) {
+	return new Promise((resolve, reject) => {
+		// if the arguments passed are not exactly 2 -> then we have an error
+		if (arguments.length !== 2) {
+			reject(new Error('Invalid number of arguments 🙈'));
+		}
+		setTimeout(function () {
+			resolve(Math.floor(Math.random() * (max - min + 1) + min))
+		}, 3000)
+	})
+}
+// this does not work for async functions that return promises
+// console.log(createRandomNumber(1, 100))
+
+// we can use .then().catch()
+createRandomNumber(1, 100)
+	.then(function (randomNumber) {
+		console.log(randomNumber);
+	})
+	.catch(function (err) {
+		console.log(err.message);
+	})
+
+// we can use async await
+async function getNumber() {
+	// for the error handling we use try catch
+	try {
+		const randomNumber = await createRandomNumber(1);
+		console.log(randomNumber);
+	} catch (err) {
+		console.log(err.message);
+	} finally {
+		console.log('this executes always');
+	}
+}
+getNumber();
